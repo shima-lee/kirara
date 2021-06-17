@@ -2,10 +2,17 @@ module.exports = {
   purge: [],
   darkMode: false, // or 'media' or 'class'
   theme: {
-    extend: {}
+    extend: {
+      colors: {
+        'regal-blue': '#FFEEDB'
+      }
+    }
   },
   variants: {
     extend: {}
   },
-  plugins: []
+  plugins: [
+    // ...
+    require('@tailwindcss/forms')
+  ]
 }
