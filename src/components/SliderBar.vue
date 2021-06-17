@@ -1,103 +1,46 @@
 <!-- This example requires Tailwind CSS v2.0+ -->
 <template>
-  <div class="bg-gray-50 w-56 lg:bg-transparent -mx-4 sm:-mx-6 lg:mx-0 py-12 sm:py-16 px-4 sm:px-6 lg:pl-0 lg:pr-8">
-    <div class="flex-grow flex flex-col">
-      <nav class="px-2 space-y-1 w-56" aria-label="Sidebar">
-        <template v-for="item in navigation" :key="item.name">
-          <div v-if="!item.children">
-            <a :href="item.href" :class="[item.current ? ' text-gray-900' : 'bg-white text-gray-600 hover:bg-gray-50 hover:text-gray-900', 'group w-full flex items-center pl-7 pr-2 py-2 text-sm font-medium rounded-md']">
-              {{ item.name }}
-            </a>
-          </div>
-          <Disclosure as="div" v-else class="space-y-1" v-slot="{ open }">
-            <DisclosureButton :class="[item.current ? 'bg-gray-100 text-gray-900' : ' text-gray-600 hover:bg-gray-50 hover:text-gray-900', 'group w-full flex items-center pr-2 py-2 text-left text-sm font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500']">
-              <svg :class="[open ? 'text-gray-400 rotate-90' : 'text-gray-300', 'mr-2 flex-shrink-0 h-5 w-5 transform group-hover:text-gray-400 transition-colors ease-in-out duration-150']" viewBox="0 0 20 20" aria-hidden="true">
-                <path d="M6 6L14 10L6 14V6Z" fill="currentColor" />
-              </svg>
-              {{ item.name }}
-            </DisclosureButton>
-            <DisclosurePanel class="space-y-1">
-              <a v-for="subItem in item.children" :key="subItem.name" :href="subItem.href" class="group w-full flex items-center pl-10 pr-2 py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50">
-                {{ subItem.name }}
-              </a>
-            </DisclosurePanel>
-          </Disclosure>
-        </template>
-      </nav>
+  <!-- Narrow sidebar-->
+  <nav aria-label="Sidebar" class="hidden md:block md:flex-shrink-0 md:bg-gray-800 md:overflow-y-auto">
+    <div class="relative w-20 flex flex-col p-3 space-y-3">
+      <a v-for="item in sidebarNavigation" :key="item.name" :href="item.href" :class="[item.current ? 'bg-gray-900 text-white' : 'text-gray-400 hover:bg-gray-700', 'flex-shrink-0 inline-flex items-center justify-center h-14 w-14 rounded-lg']">
+        <span class="sr-only">{{ item.name }}</span>
+        <component :is="item.icon" class="h-6 w-6" aria-hidden="true" />
+      </a>
     </div>
-  </div>
+  </nav>
 </template>
 
 <script>
 import { ref } from 'vue'
-import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/vue'
-
-const navigation = [
-  { name: 'Dashboard', href: '#', current: true },
-  {
-    name: 'Team',
-    current: false,
-    children: [
-      { name: 'Overview', href: '#' },
-      { name: 'Members', href: '#' },
-      { name: 'Calendar', href: '#' },
-      { name: 'Settings', href: '#' }
-    ]
-  },
-  {
-    name: 'Projects',
-    current: false,
-    children: [
-      { name: 'Overview', href: '#' },
-      { name: 'Members', href: '#' },
-      { name: 'Calendar', href: '#' },
-      { name: 'Settings', href: '#' }
-    ]
-  },
-  {
-    name: 'Calendar',
-    current: false,
-    children: [
-      { name: 'Overview', href: '#' },
-      { name: 'Members', href: '#' },
-      { name: 'Calendar', href: '#' },
-      { name: 'Settings', href: '#' }
-    ]
-  },
-  {
-    name: 'Documents',
-    current: false,
-    children: [
-      { name: 'Overview', href: '#' },
-      { name: 'Members', href: '#' },
-      { name: 'Calendar', href: '#' },
-      { name: 'Settings', href: '#' }
-    ]
-  },
-  {
-    name: 'Reports',
-    current: false,
-    children: [
-      { name: 'Overview', href: '#' },
-      { name: 'Members', href: '#' },
-      { name: 'Calendar', href: '#' },
-      { name: 'Settings', href: '#' }
-    ]
-  }
+import {
+  ArchiveIcon,
+  BanIcon,
+  FlagIcon,
+  InboxIcon,
+  MenuIcon,
+  PencilAltIcon,
+  UserCircleIcon,
+  XIcon
+} from '@heroicons/vue/outline'
+const sidebarNavigation = [
+  { name: 'Open', href: '#', icon: InboxIcon, current: true },
+  { name: 'Archive', href: '#', icon: ArchiveIcon, current: false },
+  { name: 'Customers', href: '#', icon: UserCircleIcon, current: false },
+  { name: 'Flagged', href: '#', icon: FlagIcon, current: false },
+  { name: 'Spam', href: '#', icon: BanIcon, current: false },
+  { name: 'Drafts', href: '#', icon: PencilAltIcon, current: false }
 ]
-
 export default {
   components: {
-    Disclosure,
-    DisclosureButton,
-    DisclosurePanel
+    MenuIcon,
+    XIcon
   },
   setup () {
     const open = ref(false)
-
     return {
-      navigation,
-      open
+      open,
+      sidebarNavigation
     }
   }
 }

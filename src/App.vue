@@ -1,28 +1,28 @@
 <template>
-<div class=" bg-gray-100">
-  <global-header></global-header>
-  <main class="flex">
-    <slider-bar></slider-bar>
-    <router-view></router-view>
-  </main>
-  <global-footer></global-footer>
-</div>
+  <div class="h-screen overflow-hidden bg-gray-100 flex flex-col">
+    <global-header></global-header>
+    <!-- Bottom section -->
+    <div class="min-h-0 flex-1 flex overflow-hidden">
+      <slider-bar></slider-bar>
+      <router-view></router-view>
+    </div>
+  </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
-import GlobalHeader from './components/GlobalHeader.vue'
-import GlobalFooter from './components/GlobalFooter.vue'
-import SliderBar from './components/SliderBar.vue'
-export default defineComponent({
-  name: 'App',
-  components: {
-    GlobalHeader,
-    GlobalFooter,
-    SliderBar
-  }
-})
-</script>
+<script>
+import { ref } from 'vue'
 
-<style>
-</style>
+import SliderBar from './components/SliderBar.vue'
+import GlobalHeader from './components/GlobalHeader.vue'
+
+export default {
+  components: {
+    SliderBar,
+    GlobalHeader
+  },
+  setup () {
+    return {
+    }
+  }
+}
+</script>
